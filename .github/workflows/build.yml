@@ -1,0 +1,31 @@
+name: Build and Release OpenAB
+
+on:
+  workflow_dispatch: # 允許手動點擊觸發
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 取得程式碼
+        uses: actions/checkout@v4
+
+      - name: 設定 Rust 環境
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: 編譯專案
+        run: cargo build --release
+
+      - name: 打包執行檔
+        run: |
+          cd target/release
+          tar -czvf openab-custom-linux-amd64.tar.gz openab
+
+      - name: 發布 Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest-build
+          name: Latest Custom Build
+          files: target/release/openab-custom-linux-amd64.tar.gz
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
