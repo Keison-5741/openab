@@ -3,6 +3,9 @@ name: Build and Release OpenAB
 on:
   workflow_dispatch: # 允許手動點擊觸發
 
+permissions:
+  contents: write # 權限宣告
+
 jobs:
   build:
     runs-on: ubuntu-latest
