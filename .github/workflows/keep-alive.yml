@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Ping Hugging Face Space
         env:
-          SPACE_URL: ${{ secrets.HF_SPACE_URL }}
+          HF_SPACE_URL: ${{ secrets.HF_SPACE_URL }}
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
           curl -f -X GET "$HF_SPACE_URL" \
