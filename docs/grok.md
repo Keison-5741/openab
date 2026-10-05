@@ -133,20 +133,8 @@ kubectl exec -it <pod> -- grok update
 
 # Or rebuild the image with a new pinned version:
 docker build -f Dockerfile.grok \
-  --build-arg GROK_VERSION=0.1.220 \
+  --build-arg GROK_VERSION=1.0.44 \
   --build-arg GROK_SHA256_AMD64=... \
   --build-arg GROK_SHA256_ARM64=... \
   -t openab-grok:latest .
 ```
-
-## Comparison with Hermes
-
-| Property | `Dockerfile.grok` | `Dockerfile.hermes` |
-|----------|-------------------|---------------------|
-| Provider | xAI Grok only | xAI + 30 others via Nous gateway |
-| ACP | Native (`grok agent stdio`) | Via `hermes-acp` wrapper |
-| Headless auth | API key env or device-code | Loopback OAuth (needs port-forward / ECS curl trick) |
-| Supply chain | xAI only | xAI + Nous Research install script |
-| Image size | Smaller (single static binary, no Python venv) | Larger (Python + uv + ffmpeg) |
-
-Pick `Dockerfile.grok` if Grok is the only model you need. Pick `Dockerfile.hermes` if you want multi-provider switching or fallback chains.
